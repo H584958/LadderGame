@@ -2,7 +2,8 @@ package boardGame;
 
 import java.util.*;
 
-/*** Represents a LadderGame
+/***
+ * Represents a LadderGame
  * @author Simon Kobbenes, Matias Vedeler, Christian Evensen
  */
 public class Board {
@@ -12,7 +13,8 @@ public class Board {
     private List<Player> players;
     private int numPlayers;
 
-    /*** A constructor for Board. It creates a 10x10 board with ladders and snakes,
+    /***
+     * A constructor for Board. It creates a 10x10 board with ladders and snakes,
      * with a specified amount of players.
      * @param numPlayers - how many players who is playing.
      */
@@ -36,7 +38,8 @@ public class Board {
 
     }
 
-    /*** Prints out a representation of the current board.
+    /***
+     * Prints out a representation of the current board.
      * the first square is in bottom left and last square is top left.
      */
     public void printBoard() {
@@ -57,7 +60,8 @@ public class Board {
         System.out.println();
     }
 
-    /*** Updates the board to the current position of the ladders, snakes and players.
+    /***
+     * Updates the board to the current position of the ladders, snakes and players.
      * It visualises two or more players on the same square.
      */
     public void updateBoard() {
@@ -99,7 +103,8 @@ public class Board {
         }
     }
 
-    /*** Used to get the row for ladders, snakes and players in the board Array.
+    /***
+     * Used to get the row for ladders, snakes and players in the board Array.
      * It finds the first of the possible two digit number and returns it.
      * @param pos A number that indicates the position of the object.
      * @return A integer representing the row in the board Array.
@@ -114,9 +119,12 @@ public class Board {
         return tens;
     }
 
-    /*** Moves the player given a diceroll,
-     * @param diceRoll
-     * @param p
+    /***
+     * Updates the players position given its position and current diceroll. If it lands on a snake
+     * or a ladder, the player will be moved to the corresponding square
+     * where the ladder or snakes takes the player.
+     * @param diceRoll The number of the dice roll.
+     * @param p The player which is to be moved
      */
     public void movePlayer(int diceRoll, Player p) {
         int moveToPos = diceRoll + p.getPosition();
@@ -142,10 +150,21 @@ public class Board {
         p.setPosition(moveToPos);
     }
 
+    /***
+     * Checks if the last square has been updated, if it has,
+     * the player in that square has won.
+     * @return A boolean value if someone has won or not.
+     */
     public boolean won() {
         return board[9][9] != " ";
     }
 
+    /***
+     * Starts the game, one at the time, the player rolls the dice and moves
+     * correspondingly and updates and prints the board after each turn. Until one of the players
+     * reaches the last square, then the method stops and return the winner.
+     * @return the player which won the game.
+     */
     public Player run() {
         updateBoard();
         Player winner = null;
