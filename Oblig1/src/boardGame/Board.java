@@ -2,6 +2,9 @@ package boardGame;
 
 import java.util.*;
 
+/*** Represents a LadderGame
+ * @author Simon Kobbenes, Matias Vedeler, Christian Evensen
+ */
 public class Board {
     private int[][] ladders;
     private int[][] snakes;
@@ -9,9 +12,8 @@ public class Board {
     private List<Player> players;
     private int numPlayers;
 
-    /***
-     * A constructor for Board. It creates a 10x10 board with ladders and snakes.
-     * Creates amount of players defined in the parameter.
+    /*** A constructor for Board. It creates a 10x10 board with ladders and snakes,
+     * with a specified amount of players.
      * @param numPlayers - how many players who is playing.
      */
     public Board(int numPlayers) {
@@ -34,9 +36,8 @@ public class Board {
 
     }
 
-    /***
-     * Prints out a representation of the current board.
-     *
+    /*** Prints out a representation of the current board.
+     * the first square is in bottom left and last square is top left.
      */
     public void printBoard() {
         int num = 1;
@@ -56,6 +57,9 @@ public class Board {
         System.out.println();
     }
 
+    /*** Updates the board to the current position of the ladders, snakes and players.
+     * It visualises two or more players on the same square.
+     */
     public void updateBoard() {
         int pos;
         int tens;
@@ -95,6 +99,11 @@ public class Board {
         }
     }
 
+    /*** Used to get the row for ladders, snakes and players in the board Array.
+     * It finds the first of the possible two digit number and returns it.
+     * @param pos A number that indicates the position of the object.
+     * @return A integer representing the row in the board Array.
+     */
     public int findTens ( int pos) {
         int tens = 0;
         if (pos % 10 == pos) {
@@ -105,13 +114,15 @@ public class Board {
         return tens;
     }
 
+    /*** Moves the player given a diceroll,
+     * @param diceRoll
+     * @param p
+     */
     public void movePlayer(int diceRoll, Player p) {
         int moveToPos = diceRoll + p.getPosition();
 
-        if (moveToPos > 100) {
+        if (moveToPos > 99) {
             return;
-        } else if(moveToPos == 100) {
-            moveToPos = 99;
         }
 
         for (int[] l : ladders) {
@@ -147,7 +158,7 @@ public class Board {
                 movePlayer(diceRoll, p);
 
                 try {
-                    Thread.sleep(1000);
+                    Thread.sleep(100);
                 } catch (InterruptedException e) {
                     System.out.println(e);
                 }
@@ -164,14 +175,20 @@ public class Board {
                         movePlayer(1, p);
                     }
 
+
                     try {
-                        Thread.sleep(1000);
+                        Thread.sleep(100);
                     } catch (InterruptedException e) {
                         System.out.println(e);
                     }
                     System.out.println(p.getId() + " rolled " + diceRoll);
                     updateBoard();
                     printBoard();
+                    if (won() && p.getPosition() == 99) {
+                        winner = p;
+                        System.out.println("The winner is " + p.getId());
+                        return p;
+                    }
                 }
 
                 if (won() && p.getPosition() == 99) {
