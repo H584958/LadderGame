@@ -28,7 +28,7 @@ public class Board {
 
         players = new ArrayList<>();
 
-        String[] names = "WASD".split("");
+        String[] names = "QWER".split("");
         for (int i = 0; i < numPlayers; i++) {
             players.add(new Player(names[i]));
         }
@@ -177,7 +177,7 @@ public class Board {
                 movePlayer(diceRoll, p);
 
                 try {
-                    Thread.sleep(100);
+                    Thread.sleep(1000);
                 } catch (InterruptedException e) {
                     System.out.println(e);
                 }
@@ -196,7 +196,7 @@ public class Board {
 
 
                     try {
-                        Thread.sleep(100);
+                        Thread.sleep(1000);
                     } catch (InterruptedException e) {
                         System.out.println(e);
                     }
