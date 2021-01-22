@@ -56,7 +56,7 @@ public class Tester {
     }
     /***
      * Starts a game of board.
-     * @result
+     * @result the winner wil be returned and it will no longer be null.
      */
     @Test
     public void testRun() {
